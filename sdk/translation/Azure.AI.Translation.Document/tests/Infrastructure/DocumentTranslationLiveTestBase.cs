@@ -98,6 +98,22 @@ namespace Azure.AI.Translation.Document.Tests
             return containerClient.GenerateSasUri(BlobContainerSasPermissions.Read | BlobContainerSasPermissions.Write, expiresOn);
         }
 
+        public async Task<Uri> CreateGlossaryContainerAsync(List<TestDocument> documents = default)
+        {
+            Recording.DisableIdReuse();
+            var glossaryContainerName = "glossary" + Recording.GenerateId();
+            var containerClient = GetBlobContainerClient(glossaryContainerName);
+            await containerClient.CreateAsync(PublicAccessType.BlobContainer).ConfigureAwait(false);
+
+            if (documents != default)
+            {
+                await UploadDocumentsAsync(containerClient, documents);
+            }
+
+            var expiresOn = DateTimeOffset.UtcNow.AddHours(1);
+            return containerClient.GenerateSasUri(BlobContainerSasPermissions.Read | BlobContainerSasPermissions.Write, expiresOn);
+        }
+
         protected async Task UploadDocumentsAsync(BlobContainerClient containerClient, List<TestDocument> documents)
         {
             for (int i = 0; i < documents.Count; i++)

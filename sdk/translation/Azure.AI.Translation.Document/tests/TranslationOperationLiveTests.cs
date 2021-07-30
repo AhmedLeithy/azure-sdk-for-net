@@ -430,16 +430,10 @@ namespace Azure.AI.Translation.Document.Tests
 
             //Perform Translation Process
             DocumentTranslationClient client = GetClient();
-            try
-            {
             var input = new DocumentTranslationInput(source, target, "es", new TranslationGlossary(glossarySasUri, "csv"));
             DocumentTranslationOperation operation = await client.StartTranslationAsync(input);
             await operation.WaitForCompletionAsync();
-            }
-            catch (Exception e)
-            {
-                System.Console.WriteLine(e);
-            }
+
             //stream translated text into string
             var containerClient = GetBlobContainerClient(targetContainerName);
             var blobClient = containerClient.GetBlobClient(oneTestDocuments[0].Name);

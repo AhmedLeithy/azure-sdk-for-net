@@ -426,6 +426,7 @@ namespace Azure.AI.Translation.Document.Tests
             string glossaryContent = "First, glossaryFirst\ntest, glossaryTest\n";
 
             var glossaryContainerSasUri = await CreateGlossaryContainerAsync(new List<TestDocument> {new TestDocument(glossaryName,glossaryContent)});
+            glossaryName = "validGlossary.csv";
             var glossarySasUri = new Uri(String.Format("{0}{1}{2}{3}/{4}{5}", glossaryContainerSasUri.Scheme, Uri.SchemeDelimiter, glossaryContainerSasUri.Authority, glossaryContainerSasUri.AbsolutePath, glossaryName, glossaryContainerSasUri.Query));
 
             //Perform Translation Process

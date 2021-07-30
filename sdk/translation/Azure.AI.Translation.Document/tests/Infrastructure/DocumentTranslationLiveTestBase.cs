@@ -111,7 +111,7 @@ namespace Azure.AI.Translation.Document.Tests
             }
 
             var expiresOn = DateTimeOffset.UtcNow.AddHours(1);
-            return containerClient.GenerateSasUri(BlobContainerSasPermissions.List | BlobContainerSasPermissions.Write, expiresOn);
+            return containerClient.GenerateSasUri(BlobContainerSasPermissions.List | BlobContainerSasPermissions.Read | BlobContainerSasPermissions.Write, expiresOn);
         }
 
         protected async Task UploadDocumentsAsync(BlobContainerClient containerClient, List<TestDocument> documents)
